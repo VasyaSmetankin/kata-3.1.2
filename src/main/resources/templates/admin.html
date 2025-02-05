@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Админ панель</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Это админская страница</h1>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Выйти</button>
+</form>
+</body>
+</html>
