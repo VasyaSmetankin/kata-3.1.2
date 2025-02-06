@@ -22,26 +22,26 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")  // ✅ Разрешить обоим
+                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/", "/login", "/process_login", "/styles.css").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .loginProcessingUrl("/process_login") // Указываем обработчик логина
-                        .defaultSuccessUrl("/user", true) // Перенаправление после успешного логина
-                        .failureUrl("/login?error") // Если ошибка
+                        .loginProcessingUrl("/process_login")
+                        .defaultSuccessUrl("/dashboard", true)
+                        .failureUrl("/login?error")
                         .permitAll()
-                        .successHandler(successUserHandler)
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/logout") // URL выхода
-                        .logoutSuccessUrl("/login?logout") // Перенаправление после выхода
-                        .invalidateHttpSession(true) // Инвалидируем сессию
-                        .deleteCookies("JSESSIONID") // Удаляем куки
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
                 )
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable());
+
         return http.build();
     }
 

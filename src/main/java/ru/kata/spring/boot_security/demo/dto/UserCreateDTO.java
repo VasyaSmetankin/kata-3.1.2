@@ -9,5 +9,5 @@ public class UserCreateDTO {
     private String name;
     private String lastName;
     private String password;
-    private Set<String> roles;  // 🔹 Теперь можно передавать роли при создании/редактировании
+    private Set<String> roles;
 }

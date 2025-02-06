@@ -19,7 +19,6 @@ public class UserMapper {
         this.roleService = roleService;
     }
 
-    // 🔹 Преобразуем Entity в DTO
     public UserDTO toDto(User user) {
         return new UserDTO(
                 user.getId(),
@@ -30,14 +29,13 @@ public class UserMapper {
         );
     }
 
-    // 🔹 Преобразуем DTO в Entity
     public User toEntity(UserCreateDTO userDto) {
         User user = new User();
         user.setLogin(userDto.getLogin());
         user.setName(userDto.getName());
         user.setLastName(userDto.getLastName());
-        user.setPassword(userDto.getPassword()); // Пароль шифруется в сервисе
-        user.setRoles(roleService.getRolesByNames(userDto.getRoles())); // Устанавливаем роли из строк
+        user.setPassword(userDto.getPassword());
+        user.setRoles(roleService.getRolesByNames(userDto.getRoles()));
         return user;
     }
 }

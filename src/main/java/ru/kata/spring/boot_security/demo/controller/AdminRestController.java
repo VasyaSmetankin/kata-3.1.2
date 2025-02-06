@@ -60,7 +60,6 @@ public class AdminRestController {
         return ResponseEntity.noContent().build();
     }
 
-    // 🔹 Новый эндпоинт для получения всех доступных ролей
     @GetMapping("/roles")
     public ResponseEntity<Set<String>> getAllRoles() {
         return ResponseEntity.ok(roleService.getAllRoles());

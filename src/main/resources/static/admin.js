@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("confirmDelete").addEventListener("click", deleteUser);
 });
 
-// Загружаем пользователей в таблицу
 function loadUsers() {
     fetch("/api/users")
         .then(response => response.json())
@@ -30,7 +29,6 @@ function loadUsers() {
                 table.appendChild(row);
             });
 
-            // Добавляем обработчики после отрисовки таблицы
             document.querySelectorAll(".edit-btn").forEach(button => {
                 button.addEventListener("click", () => editUser(button.dataset.userId));
             });
@@ -42,7 +40,6 @@ function loadUsers() {
         .catch(error => console.error("Ошибка загрузки пользователей:", error));
 }
 
-// Открываем модальное окно для редактирования пользователя
 function editUser(userId) {
     fetch(`/api/users/${userId}`)
         .then(response => response.json())
@@ -76,7 +73,6 @@ function editUser(userId) {
         .catch(error => console.error("Ошибка загрузки пользователя:", error));
 }
 
-// Открываем модальное окно для удаления пользователя
 function openDeleteModal(userId) {
     fetch(`/api/users/${userId}`)
         .then(response => response.json())
@@ -87,13 +83,11 @@ function openDeleteModal(userId) {
             document.getElementById("deleteUserLastName").value = user.lastName;
             document.getElementById("deleteUserRoles").value = [...user.roles].join(", ");
 
-            // Открываем модальное окно удаления
             new bootstrap.Modal(document.getElementById("deleteUserModal")).show();
         })
         .catch(error => console.error("Ошибка загрузки пользователя:", error));
 }
 
-// Удаление пользователя
 function deleteUser() {
     const id = document.getElementById("deleteUserId").value;
     fetch(`/api/users/${id}`, { method: "DELETE" })
@@ -104,7 +98,6 @@ function deleteUser() {
         .catch(error => console.error("Ошибка удаления пользователя:", error));
 }
 
-// Сохранение нового или редактируемого пользователя
 function saveUser() {
     const id = document.getElementById("userId").value;
     const user = {
@@ -130,7 +123,6 @@ function saveUser() {
         .catch(error => console.error("Ошибка сохранения пользователя:", error));
 }
 
-// Загрузка текущего пользователя
 function loadCurrentUser() {
     fetch("/api/users")
         .then(response => response.json())
@@ -141,7 +133,6 @@ function loadCurrentUser() {
         .catch(error => console.error("Ошибка загрузки текущего пользователя:", error));
 }
 
-// Загрузка ролей в форму добавления/редактирования
 function loadRoles() {
     fetch("/api/users/roles")
         .then(response => response.json())

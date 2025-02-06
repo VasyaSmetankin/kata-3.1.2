@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public User saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // Шифруем пароль
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -41,7 +41,6 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
 
-        // Устанавливаем новые роли
         user.setRoles(roleService.getRolesByNames(updatedUser.getRoles().stream()
                 .map(role -> role.getRoleName()).collect(Collectors.toSet())));
 

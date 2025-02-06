@@ -8,11 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
+
     @GetMapping("/")
     public String index(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
+            return "redirect:/dashboard";
         }
         return "index";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "dashboard";
     }
 }

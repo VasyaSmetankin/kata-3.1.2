@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден: " + username));
 
-        return new UserDetailsImpl(user); // Должен возвращаться UserDetailsImpl
+        return new UserDetailsImpl(user);
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(User user) {

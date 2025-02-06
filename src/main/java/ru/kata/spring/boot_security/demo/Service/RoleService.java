@@ -14,14 +14,12 @@ public class RoleService {
 
     private final RoleRepository roleRepository;
 
-    // Получаем список всех доступных ролей
     public Set<String> getAllRoles() {
         return roleRepository.findAll().stream()
                 .map(Role::getRoleName)
                 .collect(Collectors.toSet());
     }
 
-    // Получаем Set<Role> из Set<String> (для обновления пользователя)
     public Set<Role> getRolesByNames(Set<String> roleNames) {
         return roleNames.stream()
                 .map(roleName -> roleRepository.findByRoleName(roleName).orElseThrow(

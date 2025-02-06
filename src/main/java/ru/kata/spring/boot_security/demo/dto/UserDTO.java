@@ -11,5 +11,5 @@ public class UserDTO {
     private String login;
     private String name;
     private String lastName;
-    private Set<String> roles;  // 🔹 Теперь это Set<String>, а не Set<Role>
+    private Set<String> roles;
 }

@@ -23,7 +23,7 @@ public class Role {
     private String roleName;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    @JsonIgnore // Избегает ленивую инициализацию
+    @JsonIgnore
     private Set<User> users;
 }
 
