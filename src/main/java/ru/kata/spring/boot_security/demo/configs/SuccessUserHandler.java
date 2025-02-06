@@ -23,19 +23,19 @@ public class SuccessUserHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        System.out.println("User Authorities: " + authorities);  // Лог ролей
-        System.out.println("Redirecting...");  // Лог вызова метода
+        boolean isAdmin = authorities.stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
 
-        boolean isAdmin = authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+        boolean isUser = authorities.stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"));
 
         if (isAdmin) {
-            System.out.println("Redirecting to /admin");
             response.sendRedirect("/admin");
-            return;
+        } else if (isUser) {
+            response.sendRedirect("/user");
+        } else {
+            response.sendRedirect("/");
         }
-
-        System.out.println("Redirecting to /user");
-        response.sendRedirect("/user");
     }
 
 
