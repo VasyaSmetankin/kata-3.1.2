@@ -3,9 +3,9 @@ package ru.kata.spring.boot_security.demo.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.Entity.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
-import ru.kata.spring.boot_security.demo.Service.RoleService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,19 +18,27 @@ public class UserService {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional(readOnly = true)
     public List<User> findAllUsers() {
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        users.forEach(user -> user.getRoles().size());
+        return users;
     }
 
+    @Transactional(readOnly = true)
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow();
+        user.getRoles().size();
+        return user;
     }
 
+    @Transactional
     public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
+    @Transactional
     public User updateUser(Long id, User updatedUser) {
         User user = userRepository.findById(id).orElseThrow();
         user.setLogin(updatedUser.getLogin());
@@ -47,6 +55,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
